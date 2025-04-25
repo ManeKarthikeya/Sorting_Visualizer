@@ -1,0 +1,201 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 9% 98%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 252 100% 67%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 243 75% 59%;
+    --secondary-foreground: 240 5.9% 10%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 262 83% 58%;
+    --accent-foreground: 240 5.9% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 252 100% 67%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Custom properties for sorting colors */
+    --sorting-default: #3B82F6; /* Bright blue */
+    --sorting-comparing: #F59E0B; /* Bright amber */
+    --sorting-swapping: #EF4444; /* Bright red */
+    --sorting-sorted: #10B981; /* Bright emerald green */
+    --sorting-pivot: #8B5CF6; /* Bright violet */
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 252 100% 67%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 243 75% 59%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 262 83% 58%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 252 100% 67%;
+    
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Dark mode sorting colors - even brighter for visibility */
+    --sorting-default: #60A5FA; /* Brighter blue */
+    --sorting-comparing: #FBBF24; /* Brighter amber */
+    --sorting-swapping: #F87171; /* Brighter red */
+    --sorting-sorted: #34D399; /* Brighter emerald */
+    --sorting-pivot: #A78BFA; /* Brighter violet */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.array-container {
+  @apply h-64 sm:h-80 md:h-96 flex items-end justify-center gap-px overflow-hidden;
+  padding-bottom: 1rem;
+  position: relative;
+  perspective: 1000px;
+}
+
+.array-bar {
+  @apply inline-block transition-all duration-150;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transform-style: preserve-3d;
+  animation: appearFromBottom 0.5s ease-out forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* Enhanced animations for sorting visualization */
+@keyframes appearFromBottom {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation for comparing bars */
+.array-bar[style*="--sorting-comparing"] {
+  animation: pulse 0.5s infinite alternate;
+  box-shadow: 0 0 15px rgba(251, 191, 36, 0.7);
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.05);
+  }
+}
+
+/* Animation for swapping bars */
+.array-bar[style*="--sorting-swapping"] {
+  animation: shake 0.3s;
+  box-shadow: 0 0 15px rgba(244, 114, 182, 0.7);
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* Animation for sorted bars */
+.array-bar[style*="--sorting-sorted"] {
+  animation: glow 1.5s infinite alternate;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.7);
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 5px rgba(16, 185, 129, 0.5);
+  }
+  to {
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.9);
+  }
+}
+
+/* Animation for pivot bars */
+.array-bar[style*="--sorting-pivot"] {
+  animation: bounce 0.5s infinite alternate;
+  box-shadow: 0 0 15px rgba(96, 165, 250, 0.7);
+}
+
+@keyframes bounce {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-5px);
+  }
+}
+
+/* Add a subtle gradient to bars */
+.array-bar {
+  background-image: linear-gradient(to top, rgba(0,0,0,0.15), rgba(255,255,255,0.1));
+}
