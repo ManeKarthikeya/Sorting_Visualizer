@@ -1,3 +1,3 @@
 ## Project info
 
-**URL**: https://sorting-visualizer-iota-cyan.vercel.app/auth
+**URL**: https://sortigvisualizer.netlify.app/
